@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00E175F0-14ED-452A-99CB-0BE1BF649A86}</ProjectGuid>
+    <ProjectGuid>{3CF2DFC3-F965-4F47-8D20-F10A8652FCD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HoneySelectButtplugPlugin</RootNamespace>
-    <AssemblyName>HoneySelectButtplugPlugin</AssemblyName>
+    <RootNamespace>Buttplug4Net35</RootNamespace>
+    <AssemblyName>Buttplug4Net35</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>E:\Honey Select\Plugins\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IllusionPlugin">
-      <HintPath>..\Libs\IPA\IllusionPlugin.dll</HintPath>
+    <Reference Include="LitJSON, Version=0.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LitJson.0.13.0\lib\net35\LitJSON.dll</HintPath>
     </Reference>
     <Reference Include="SuperSocket.ClientEngine, Version=0.10.0.0, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
       <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net35-client\SuperSocket.ClientEngine.dll</HintPath>
@@ -41,26 +41,41 @@
     <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\Libs\Unity5.3\UnityEngine.dll</HintPath>
+      <HintPath>E:\Honey Select\Honey Select Unlimited_64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.15.2.11, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.15.2\lib\net35\WebSocket4Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HsButtplugPlugin.cs" />
+    <Compile Include="AssemblyGitVersion.cs" />
+    <Compile Include="ButtplugClientDevice.cs" />
+    <Compile Include="ButtplugConsts.cs" />
+    <Compile Include="ButtplugDevice.cs" />
+    <Compile Include="ButtplugDeviceMessage.cs" />
+    <Compile Include="ButtplugJsonMessageParser.cs" />
+    <Compile Include="ButtplugLog.cs" />
+    <Compile Include="ButtplugLogLevel.cs" />
+    <Compile Include="ButtplugLogManager.cs" />
+    <Compile Include="ButtplugLogMessageEventArgs.cs" />
+    <Compile Include="ButtplugMessage.cs" />
+    <Compile Include="ButtplugWSClient.cs" />
+    <Compile Include="DeviceAction.cs" />
+    <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="IButtplugDevice.cs" />
+    <Compile Include="IButtplugLog.cs" />
+    <Compile Include="IButtplugLogManager.cs" />
+    <Compile Include="IButtugLogExtenions.cs" />
+    <Compile Include="LogEventArgs.cs" />
+    <Compile Include="LogExceptionEventArgs.cs" />
+    <Compile Include="MessageReceivedEventArgs.cs" />
+    <Compile Include="Messages\ButtplugMessageWrapper.cs" />
+    <Compile Include="Messages\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Buttplug4Net35\Buttplug4Net35.csproj">
-      <Project>{3CF2DFC3-F965-4F47-8D20-F10A8652FCD2}</Project>
-      <Name>Buttplug4Net35</Name>
-    </ProjectReference>
+    <Compile Include="ScanningFinishedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId />
+    <PackageVersion>1.0.0-dev</PackageVersion>
+    <RootNamespace>Buttplug.Client</RootNamespace>
+    <AssemblyName>Buttplug.Client</AssemblyName>
+    <TargetFrameworks>net47;netstandard2.0;net35</TargetFrameworks>
+    <CodeAnalysisRuleSet>..\Buttplug.ProjectFiles\ButtplugCodeAnalysisRules.ruleset</CodeAnalysisRuleSet>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Product>Buttplug Client Library</Product>
+    <Authors>qdot</Authors>
+    <Copyright>Copyright 2017 Nonpolynomial Labs, LLC</Copyright>
+    <Description>Core Library for the Buttplug Sex Toy Control Protocol. Contains base classes for message creation, abstract devices/transports, and utilities for Client/Server creation.</Description>
+    <PackageIconUrl>https://github.com/metafetish/buttplug-csharp/blob/master/Buttplug.Components.Controls/Resources/buttplug-logo-1.png?raw=true</PackageIconUrl>
+    <PackageProjectUrl>http://www.github.com/metafetish/buttplug-csharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/BSD-3-Clause</PackageLicenseUrl>
+
+    <!--Generate Symbols (*.pdb) files in their own package for easier debugging by consuming apps-->
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+
+    <!--Don't auto generate AssemblyInfo-->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
+    <!-- StyleCop doesn't like .Net Standard 2.0 for some reason... -->
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" version="11.1.0" />
+    <PackageReference Include="NLog" version="4.5.4" />
+    <PackageReference Include="StyleCop.Analyzers" version="1.1.0-beta004" PrivateAssets="All" />
+    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
+    <PackageReference Include="Microsoft.CSharp" version="4.4.1" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta004\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta004\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <AdditionalFiles Include="..\Buttplug.ProjectFiles\stylecop.json" />
+    <None Include="app.config" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Buttplug.Core\Buttplug.Core.csproj" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+</Project>
