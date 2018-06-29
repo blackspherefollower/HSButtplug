@@ -153,92 +153,8 @@ namespace Buttplug4Net35
                     }
                 }
             }
-            /*
-            JArray msgArray;
-            try
-            {
-                msgArray = JArray.Parse(aJsonMsg);
-            }
-            catch (JsonReaderException e)
-            {
-                var err = new Error($"Not valid JSON: {aJsonMsg} - {e.Message}", Error.ErrorClass.ERROR_MSG, ButtplugConsts.SystemMsgId);
-                _bpLogger?.LogErrorMsg(err);
-                res.Add(err);
-                return res.ToArray();
-            }
-
-            if (!msgArray.Any())
-            {
-                var err = new Error("No messages in array", Error.ErrorClass.ERROR_MSG, ButtplugConsts.SystemMsgId);
-                _bpLogger?.LogErrorMsg(err);
-                res.Add(err);
-                return res.ToArray();
-            }
-
-            // JSON input is an array of messages.
-            // We currently only handle the first one.
-            foreach (var o in msgArray.Children<JObject>())
-            {
-                if (!o.Properties().Any())
-                {
-                    var err = new Error("No message name available", Error.ErrorClass.ERROR_MSG, ButtplugConsts.SystemMsgId);
-                    _bpLogger?.LogErrorMsg(err);
-                    res.Add(err);
-                    continue;
-                }
-
-                var msgName = o.Properties().First().Name;
-                if (!_messageTypes.Any() || !_messageTypes.ContainsKey(msgName))
-                {
-                    var err = new Error($"{msgName} is not a valid message class", Error.ErrorClass.ERROR_MSG, ButtplugConsts.SystemMsgId);
-                    _bpLogger?.LogErrorMsg(err);
-                    res.Add(err);
-                    continue;
-                }
-
-                // This specifically could fail due to object conversion.
-                res.Add(DeserializeAs(o, _messageTypes[msgName], msgName, aJsonMsg));
-            }
-            */
             return res.ToArray();
         }
-
-        /*
-        private ButtplugMessage DeserializeAs(JObject aObject, Type aMsgType, string aMsgName, string aJsonMsg)
-        {
-            try
-            {
-                var r = aObject[aMsgName].Value<JObject>();
-                var msg = (ButtplugMessage)r.ToObject(aMsgType, _serializer);
-                _bpLogger?.Trace($"Message successfully parsed as {aMsgName} type");
-                return msg;
-            }
-            catch (InvalidCastException e)
-            {
-                var err = new Error($"Could not create message for JSON {aJsonMsg}: {e.Message}", Error.ErrorClass.ERROR_MSG, ButtplugConsts.SystemMsgId);
-                _bpLogger?.LogErrorMsg(err);
-                return err;
-            }
-            catch (JsonSerializationException e)
-            {
-                // Object didn't fit. Downgrade?
-                var tmp = (ButtplugMessage)aMsgType.GetConstructor(
-                    BindingFlags.NonPublic | BindingFlags.Instance,
-                    null, Type.EmptyTypes, null)?.Invoke(null);
-                if (tmp?.PreviousType != null)
-                {
-                    var msg = DeserializeAs(aObject, tmp.PreviousType, aMsgName, aJsonMsg);
-                    if (!(msg is Error))
-                    {
-                        return msg;
-                    }
-                }
-
-                var err = new Error($"Could not create message for JSON {aJsonMsg}: {e.Message}", Error.ErrorClass.ERROR_MSG, ButtplugConsts.SystemMsgId);
-                _bpLogger?.LogErrorMsg(err);
-                return err;
-            }
-        }*/
 
         /// <summary>
         /// Serializes a single <see cref="ButtplugMessage"/> object into a JSON string for a specified version of the schema.
@@ -294,6 +210,18 @@ namespace Buttplug4Net35
                     msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((SingleMotorVibrateCmd)msg) + "}");
                 else if (msg.GetType() == typeof(VibrateCmd))
                     msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((VibrateCmd)msg) + "}");
+                else if (msg.GetType() == typeof(RotateCmd))
+                    msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((RotateCmd)msg) + "}");
+                else if (msg.GetType() == typeof(LinearCmd))
+                    msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((LinearCmd)msg) + "}");
+                else if (msg.GetType() == typeof(FleshlightLaunchFW12Cmd))
+                    msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((FleshlightLaunchFW12Cmd)msg) + "}");
+                else if (msg.GetType() == typeof(VorzeA10CycloneCmd))
+                    msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((VorzeA10CycloneCmd)msg) + "}");
+                else if (msg.GetType() == typeof(KiirooCmd))
+                    msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((KiirooCmd)msg) + "}");
+                else if (msg.GetType() == typeof(LovenseCmd))
+                    msgs.Add("{\"" + msg.GetType().Name + "\": " + JsonUtility.ToJson((LovenseCmd)msg) + "}");
             }
 
             var aJsonMsg = "[" + string.Join(",", msgs.ToArray()) + "]";
