@@ -540,14 +540,14 @@ namespace Buttplug4Net35
             if (!_devices.TryGetValue(aDevice.Index, out ButtplugClientDevice dev))
             {
                 var t = new Task<ButtplugMessage>(() => new Error("Device not available.", Error.ErrorClass.ERROR_DEVICE, ButtplugConsts.SystemMsgId));
-                t.Start(TaskScheduler.Current);
+                t.Start(TaskScheduler.Default);
                 return t;
             }
 
             if (!dev.AllowedMessages.ContainsKey(aDeviceMsg.GetType().Name))
             {
                 var t = new Task<ButtplugMessage>(() => new Error("Device does not accept message type: " + aDeviceMsg.GetType().Name, Error.ErrorClass.ERROR_DEVICE, ButtplugConsts.SystemMsgId));
-                t.Start(TaskScheduler.Current);
+                t.Start(TaskScheduler.Default);
                 return t;
             }
 
@@ -563,7 +563,7 @@ namespace Buttplug4Net35
         private Task<bool> SendMessageExpectOk(ButtplugMessage aMsg)
         {
             var t = new Task<bool>(() => SendMessage(aMsg).Result is Ok);
-            t.Start(TaskScheduler.Current);
+            t.Start(TaskScheduler.Default);
             return t;
         }
 
@@ -609,7 +609,7 @@ namespace Buttplug4Net35
                     return new Error(e.Message, Error.ErrorClass.ERROR_UNKNOWN, ButtplugConsts.SystemMsgId);
                 }
             }, _tokenSource.Token);
-            t.Start(TaskScheduler.Current);
+            t.Start(TaskScheduler.Default);
             return t;
         }
 
