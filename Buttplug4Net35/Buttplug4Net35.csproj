@@ -41,8 +41,6 @@
     <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="UnityEngine">
       <HintPath>E:\Honey Select\Honey Select Unlimited_64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
