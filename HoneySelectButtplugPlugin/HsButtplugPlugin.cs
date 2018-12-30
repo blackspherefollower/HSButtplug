@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Buttplug4Net35;
@@ -22,6 +23,7 @@ namespace HoneySelectButtplugPlugin
         private bool _vibrate;
         private bool _inOrgasm;
         private DateTime _endOrgsam;
+        private Dictionary<string, double> _aTime = new Dictionary<string, double>();
 
         public void OnApplicationStart()
         {
@@ -66,6 +68,8 @@ namespace HoneySelectButtplugPlugin
 
             bool hit = false;
             bool orgasm = false;
+            double aTimeO = 0;
+            double aTimeN = 0;
             string data = "";
             GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject go in allObjects)
@@ -76,10 +80,16 @@ namespace HoneySelectButtplugPlugin
                     continue;
                 }
 
-                data += "Found: " + go.name + " - " + anim.name + " - " +
-                                  anim.GetCurrentAnimatorStateInfo(0).length +
+                aTimeN = anim.GetCurrentAnimatorStateInfo(0).length;
+                data += "Found: " + go.name + " - " + anim.name + " - " + aTimeN +
                                   (anim.GetCurrentAnimatorStateInfo(0).loop ? " looping\n" : "\n");
                 
+                if (_aTime.TryGetValue(anim.name + go.name, out aTimeO) && Math.Abs(aTimeO - aTimeN) > 0.00001 )
+                {
+                    Console.WriteLine($"Animation {anim.name} for {go.name} duration changed by {aTimeO - aTimeN} seconds! From {aTimeO} to {aTimeN}");
+                }
+                _aTime[anim.name + go.name] = aTimeN;
+
                 foreach (var c in anim.GetCurrentAnimatorClipInfo(0))
                 {
                     data += "\t" + c.clip.name + "\n";
@@ -104,7 +114,7 @@ namespace HoneySelectButtplugPlugin
                     if (!_inOrgasm && (go.name == "p_cf_anim" || go.name == "p_cm_anim") && c.clip.name.Contains("_Orgasm") && !c.clip.name.EndsWith("_A"))
                     {
                         orgasm = true;
-                        _endOrgsam = DateTime.Now.AddSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+                        _endOrgsam = DateTime.Now.AddSeconds(aTimeN);
                     }
                 }
             }
